@@ -19,8 +19,8 @@ index b1a72fa..7afb190 100644
 -	if (amfi != NULL) {
 -		/* The prelinked original AMFI registered first (PANDORA, tools/mkprelink.py). */
 -		printf("SWEET AMFI: original AMFI interface present; built-in not registered\n");
-+	kernel_segment_command_t *prelink = getsegbyname("__PRELINK_TEXT");
-+	if (amfi != NULL || (prelink != NULL && prelink->vmsize != 0)) {
++	__unused kernel_segment_command_t *prelink = getsegbyname("__PRELINK_TEXT");
++	if (amfi != NULL) {
 +		/* Original kexts are prelinked (PANDORA, tools/mkprelink.py, always with AMFI):
 +		 * the original AMFI registers the interface while the security extensions load. */
 +		printf("SWEET AMFI: original AMFI prelinked; built-in not registered\n");
