@@ -1,0 +1,22 @@
+diff --git a/bsd/kern/sweet_amfi.c b/bsd/kern/sweet_amfi.c
+--- a/bsd/kern/sweet_amfi.c
++++ b/bsd/kern/sweet_amfi.c
+@@ -175,8 +175,7 @@
+ static void
+ sweet_amfi_register(void)
+ {
+-	kernel_segment_command_t *prelink = getsegbyname("__PRELINK_TEXT");
+-	if (amfi != NULL || (prelink != NULL && prelink->vmsize != 0)) {
++	if (amfi != NULL) {
+ 		/* Original kexts are prelinked (PANDORA, tools/mkprelink.py, always with AMFI):
+ 		 * the original AMFI registers the interface while the security extensions load. */
+ 		printf("SWEET AMFI: original AMFI prelinked; built-in not registered\n");
+@@ -184,7 +183,7 @@
+ 	}
+ 	sweet_amfi_builtin = true;
+ 	amfi_interface_register(&sweet_amfi);
+-	printf("SWEET AMFI: built-in interface registered (no entitlements)\n");
++	printf("SWEET AMFI: built-in interface registered (PANDORA forced, prelink present)\n");
+ }
+ STARTUP(EARLY_BOOT, STARTUP_RANK_MIDDLE, sweet_amfi_register);
+ #endif /* ARM64_BOARD_CONFIG_SWEET */
